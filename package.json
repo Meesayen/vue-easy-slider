@@ -1,6 +1,6 @@
 {
-  "name": "vue-easy-slider",
-  "version": "5.4.0-next.0",
+  "name": "@meesayen/vue-easy-slider",
+  "version": "5.4.0",
   "description": "vue-easy-slider is a slider component of Vue.js.",
   "keywords": [
     "slide",
