@@ -176,7 +176,6 @@ export default {
 
     function initTouchArea(touchArea) {
       if (state.af || !props.touch || !touchArea) return
-      console.log(touchArea)
 
       state.af = new AlloyFinger(touchArea, {
         swipe: (e) => {
@@ -284,7 +283,6 @@ export default {
     watch(
       () => touchAreaRef.value,
       (touchArea) => {
-        console.log('aho', touchArea)
         initTouchArea(touchArea)
       },
       {
