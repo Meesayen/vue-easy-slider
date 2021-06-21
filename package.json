@@ -12,7 +12,7 @@
     "vue-component"
   ],
   "homepage": "https://github.com/meesayen/vue-easy-slider",
-  "author": "Suhaha < jklopsdfw@gmail.com >",
+  "author": "Federico Giovagnoli <gvg.fede@gmail.com>",
   "repository": {
     "type": "git",
     "url": "git@github.com:meesayen/vue-easy-slider.git"
@@ -26,19 +26,14 @@
       "require": "./dist/vue-easy-slider.umd.js"
     }
   },
-  "unpkg": "dist/vue-easy-slider.min.js",
-  "jsdelivr": "dist/vue-easy-slider.min.js",
   "typings": "types/index.d.ts",
   "files": [
     "src",
-    "dist/*.js",
+    "dist",
     "types/*.d.ts"
   ],
   "scripts": {
     "build": "vite build",
-    "build:browser": "cross-env NODE_ENV=production rollup --config build/rollup.config.browser.js",
-    "build:es": "cross-env NODE_ENV=production rollup --config build/rollup.config.esm.js",
-    "build:umd": "cross-env NODE_ENV=production rollup --config build/rollup.config.umd.js",
     "dev": "cross-env NODE_ENV=development rollup --config build/rollup.config.browser.js --watch",
     "test": "jest"
   },
