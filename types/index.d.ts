@@ -1,9 +1,4 @@
-import Vue, { PluginObject, PluginFunction } from 'vue'
-
-export class SliderPlugin implements PluginObject<{}> {
-  install: PluginFunction<{}>
-  static install(pVue: typeof Vue, options?: {} | undefined): void
-}
+import Vue from 'vue'
 
 export class Slider extends Vue {}
 export class SliderItem extends Vue {}

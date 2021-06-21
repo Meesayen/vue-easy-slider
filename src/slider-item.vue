@@ -7,7 +7,6 @@
       v-bind="$attrs"
       :style="{ zIndex: zIndex, transition: `all ${speed / 1000}s` }"
       class="slider-item"
-      v-on="$listeners"
     >
       <slot />
     </div>
@@ -15,79 +14,109 @@
 </template>
 
 <script>
+import {
+  onBeforeMount,
+  reactive,
+  nextTick,
+  onBeforeUnmount,
+  computed,
+  inject,
+} from 'vue'
 export default {
   name: 'SliderItem',
-  data() {
-    return {
+  setup() {
+    const state = reactive({
       display: false,
-      isInit: false,
+      isInited: false,
       initAnimation: false,
       direction: false,
       animation: 'normal',
       speed: 500,
       zIndex: 99,
-    }
-  },
+    })
 
-  created() {
-    this.$parent.$emit('slider:init')
-    this.speed = this.$parent.speed || 500
-    this.animation = this.$parent.animation || 'normal'
-  },
+    const slider = inject('slider-api')
 
-  destroyed() {
-    this.$parent.$emit('slider:init')
-  },
-
-  methods: {
-    init() {
-      if (this.isInit) {
+    function init() {
+      if (state.isInited) {
         return
       }
 
-      this.isInit = true
-      this.display = true
-      this.initAnimation = true
-      this.$nextTick(() => (this.initAnimation = false))
-    },
-    // direction: left: true, right: false
-    show(direction) {
-      this.zIndex = 99
-      this.direction = direction
-      this.$nextTick(() => (this.display = true))
-    },
-    hide(direction) {
-      this.zIndex = 98
-      this.direction = direction
-      this.$nextTick(() => (this.display = false))
-    },
+      state.isInited = true
+      state.display = true
+      state.initAnimation = true
+      nextTick(() => (state.initAnimation = false))
+    }
+
+    function show(direction) {
+      state.zIndex = 99
+      state.direction = direction
+      nextTick(() => (state.display = true))
+    }
+
+    function hide(direction) {
+      state.zIndex = 98
+      state.direction = direction
+      nextTick(() => (state.display = false))
+    }
+
+    const itemApi = {
+      init,
+      show,
+      hide,
+    }
+
+    onBeforeMount(() => {
+      slider.register(itemApi)
+      state.speed = slider.speed.value || 500
+      state.animation = slider.animation.value || 'normal'
+    })
+
+    onBeforeUnmount(() => {
+      slider.deregister(itemApi)
+    })
+
+    return {
+      initAnimation: computed(() => state.initAnimation),
+      animation: computed(() => state.animation),
+      direction: computed(() => state.direction),
+      display: computed(() => state.display),
+      zIndex: computed(() => state.zIndex),
+      speed: computed(() => state.speed),
+    }
   },
 }
 </script>
 
-<style lang="stylus" scoped>
-.slider-item
-  position absolute
-  top 0
-  left 0
+<style lang="scss" scoped>
+.slider-item {
+  position: absolute;
+  top: 0;
+  left: 0;
 
-  width 100%
-  height 100%
-.normal-right-enter,
-.normal-left-leave-to
-  transform translateX(-100%)
-.normal-left-enter,
-.normal-right-leave-to
-  transform translateX(100%)
-.fade-left-enter,
-.fade-right-enter,
+  width: 100%;
+  height: 100%;
+}
+.normal-right-enter-from,
+.normal-left-leave-to {
+  transform: translateX(-100%);
+}
+.normal-left-enter-from,
+.normal-right-leave-to {
+  transform: translateX(100%);
+}
+.fade-left-enter-from,
+.fade-right-enter-from,
 .fade-left-leave-to,
-.fade-right-leave-to
-  opacity 0
-.fade-right-enter,
-.fade-left-leave-to
-  transform translateX(-10px)
-.fade-left-enter,
-.fade-right-leave-to
-  transform translateX(10px)
+.fade-right-leave-to {
+  opacity: 0;
+}
+.fade-right-enter-from,
+.fade-left-leave-to {
+  transform: translateX(-10px);
+}
+.fade-left-enter-from,
+.fade-right-leave-to {
+  transform: translateX(10px);
+}
 </style>
