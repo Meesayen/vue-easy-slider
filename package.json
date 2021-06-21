@@ -1,6 +1,6 @@
 {
   "name": "@meesayen/vue-easy-slider",
-  "version": "5.4.2",
+  "version": "5.4.3",
   "description": "vue-easy-slider is a slider component of Vue.js.",
   "keywords": [
     "slide",
@@ -36,6 +36,7 @@
   ],
   "scripts": {
     "build": "vite build",
+    "prepublishOnly": "npm run build",
     "dev": "cross-env NODE_ENV=development rollup --config build/rollup.config.browser.js --watch",
     "test": "jest"
   },
