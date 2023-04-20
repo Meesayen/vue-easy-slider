@@ -1,6 +1,6 @@
 {
   "name": "@meesayen/vue-easy-slider",
-  "version": "5.4.4",
+  "version": "5.4.5",
   "description": "vue-easy-slider is a slider component of Vue.js.",
   "keywords": [
     "slide",
@@ -22,12 +22,14 @@
   "module": "dist/vue-easy-slider.es.js",
   "exports": {
     ".": {
+      "types": "./types/index.d.ts",
       "import": "./dist/vue-easy-slider.es.js",
       "require": "./dist/vue-easy-slider.umd.js"
     },
     "./style.css": {
       "import": "./dist/style.css"
-    }  },
+    }
+  },
   "typings": "types/index.d.ts",
   "files": [
     "src",
